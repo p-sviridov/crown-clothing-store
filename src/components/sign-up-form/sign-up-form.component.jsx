@@ -18,6 +18,7 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+
   const resetForm = () => {
     setFormFields(defaultFormFields);
   };
@@ -35,6 +36,7 @@ const SignUpForm = () => {
         email,
         password
       );
+
 
       await createUserDocFromAuth(user, { displayName });
       resetForm();
@@ -54,7 +56,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className='sign-up-container'>
+    <div className="sign-up-container">
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -90,8 +92,8 @@ const SignUpForm = () => {
           type="password"
           required
           onChange={handleChange}
-          name="password"
-          value={password}
+          name="confirmPassword"
+          value={confirmPassword}
         />
 
         <Button type="submit">Sign Up</Button>
