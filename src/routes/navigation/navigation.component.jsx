@@ -1,5 +1,5 @@
 import { Fragment, useContext } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import { UserContext } from '../../contexts/user.context';
@@ -24,7 +24,7 @@ const Navigation = () => {
             SHOP
           </NavLink>
           {currentUser ? (
-            <NavLink onClick={signOutUser}>
+            <NavLink as='span' onClick={signOutUser}>
               SIGN OUT
             </NavLink>
           ) : (
