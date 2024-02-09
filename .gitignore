@@ -11,6 +11,13 @@
 # production
 /build
 
+# idea
+.idea
+/.idea/.gitignore
+/.idea/GMBX_NEXT-APP-DEMO.iml
+/.idea/modules.xml
+/.idea/vcs.xml
+
 # misc
 .DS_Store
 .env.local

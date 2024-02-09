@@ -1,19 +1,22 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import FormInput from "../form-input/form-input.component";
+import "./sign-in-form.styles.scss";
 import {
-  signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup
-} from '../../utils/firebase/firebase.utils';
-import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
-import FormInput from '../form-input/form-input.component';
-import './sign-in-form.styles.scss';
+  emailSignInStart,
+  googleSignInStart,
+} from "../../store/user/user.action";
 
 const defaultFormFields = {
-  email: '',
-  password: ''
+  email: "",
+  password: "",
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -25,19 +28,16 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-
+      dispatch(emailSignInStart(email, password));
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetForm();
     } catch (error) {
       switch (error.code) {
-        case 'auth/wrong-password':
-          alert('Incorrect password for email');
+        case "auth/wrong-password":
+          alert("Incorrect password for email");
           break;
-        case 'auth/user-not-found':
-          alert('No user associated with this email');
+        case "auth/user-not-found":
+          alert("No user associated with this email");
           break;
         default:
           console.log(error);
@@ -52,7 +52,7 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
 
   return (
@@ -83,7 +83,8 @@ const SignInForm = () => {
           <Button
             type="button"
             buttonType={BUTTON_TYPE_CLASSES.google}
-            onClick={signInWithGoogle}>
+            onClick={signInWithGoogle}
+          >
             Google Sign In
           </Button>
         </div>
